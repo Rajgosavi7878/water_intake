@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Water Intake Predictor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-image: url('{{ url_for("static", filename="images/image.jpg") }}');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+      height: 100vh;
+      margin: 0;
+    }
+    .glass {
+      background-image: url('{{ url_for("static", filename="images/image.jpg") }}');
+      background-size: cover;
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 1rem;
+      box-shadow: 0 0 30px rgba(72, 187, 255, 0.25), 0 0 10px rgba(255, 255, 255, 0.1) inset;
+      border: 8px solid black;
+      z-index: 1;
+      padding: 1rem;
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      opacity: 1;
+    }
+    input, select {
+      background-color: rgba(255, 255, 255, 0.5);
+      color: black;
+      font-weight: bold;
+      font-family: Arial, sans-serif;
+    }
+    ::placeholder {
+      color: black;
+    }
+    label {
+      color: white;
+      font-family: 'Arial Black', Arial, sans-serif;
+      font-weight: bold;
+    }
+    .result {
+      font-weight: bold;
+      color: white;
+      font-family: 'Arial Black', Arial, sans-serif;
+      background-color: black;
+      border: 4px solid white;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .btn-black {
+      background-color: black;
+      color: white;
+      font-family: 'Arial Black', Arial, sans-serif;
+    }
+    .btn-black:hover {
+      background-color: white;
+      color: black;
+    }
+    /* New styles for select options */
+    select {
+      background-color: white;
+      color: black;
+      border: 2px solid black;
+      border-radius: 0.5rem;
+    }
+    select option {
+      background-color: white;
+      color: black;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center text-white relative">
+  <div class="overlay"></div>
+  <div class="glass flex flex-col space-y-5 z-10">
+    <h2 class="text-3xl font-bold mb-6 text-center text-white">💧 Water Intake Predictor</h2>
+    <form method="POST" class="space-y-5">
+      <div>
+        <label class="block text-sm mb-1">Body Weight (kg):</label>
+        <input type="text" name="bw" value="{{ bw }}" required class="w-full px-4 py-2 rounded-lg text-white font-bold bg-white bg-opacity-20 backdrop-md border-opacity-20">
+      </div>
+      <div>
+        <label class="block text-sm mb-1">Daily Water Intake (liters):</label>
+        <input type="text" name="dwi" value="{{ dwi }}" required class="w-full px-4 py-2 rounded-lg text-white font-bold bg-white bg-opacity-20 backdrop-md border-opacity-20">
+      </div>
+      <div>
+        <label class="block text-sm mb-1">Gender:</label>
+        <select name="gender" class="w-full px-4 py-2 rounded-lg text-white font-bold bg-white bg-opacity-20 backdrop-md border-opacity-20">
+          <option value="female" {% if gender == "female" %}selected{% endif %}>Female</option>
+          <option value="male" {% if gender == "male" %}selected{% endif %}>Male</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm mb-1">Country:</label>
+        <select name="country" class="w-full px-4 py-2 rounded-lg text-white font-bold bg-white bg-opacity-20 backdrop-md border-opacity-20">
+          <option value="india" {% if country == "india" %}selected{% endif %}>India</option>
+          <option value="uk" {% if country == "uk" %}selected{% endif %}>UK</option>
+          <option value="usa" {% if country == "usa" %}selected{% endif %}>USA</option>
+        </select>
+      </div>
+      <button type="submit" class="w-full py-2 rounded-lg transition duration-200 btn-black">
+        Predict
+      </button>
+    </form>
+    {% if msg %}
+    <div class="mt-6 text-center text-lg result">
+      {{ msg }}
+    </div>
+    {% endif %}
+  </div>
+</body>
+</html>
